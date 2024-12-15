@@ -9,9 +9,7 @@ public struct CodableFactoryValue<ObjectType>: Codable {
     }
 
     public init(from decoder: any Decoder) throws {
-        guard let factory = decoder.userInfo[CodableFactory.сodingUserInfoKey] as? CodableFactory else {
-            throw "'\(CodableFactory.сodingUserInfoKey)' not fount or it's not 'CodableFactory'"
-        }
+        let factory = (decoder.userInfo[CodableFactory.сodingUserInfoKey] as? CodableFactory) ?? .global
         let object = try factory.load(decoder: decoder)
         guard let value = object as? ObjectType else {
             throw "'\(type(of: object))' is not '\(ObjectType.self)'"
@@ -20,9 +18,7 @@ public struct CodableFactoryValue<ObjectType>: Codable {
     }
 
     public func encode(to encoder: any Encoder) throws {
-        guard let factory = encoder.userInfo[CodableFactory.сodingUserInfoKey] as? CodableFactory else {
-            throw "'\(CodableFactory.сodingUserInfoKey)' not fount or it's not 'CodableFactory'"
-        }
+        let factory = (encoder.userInfo[CodableFactory.сodingUserInfoKey] as? CodableFactory) ?? .global
         try factory.save(encoder: encoder, object: wrappedValue)
     }
 }

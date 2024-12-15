@@ -91,7 +91,7 @@ try A2.addToCodableFactory(factory)
 
 Encoding and Decoding
 ### To encode:
-````
+```swift
 let myObject = MyObject(a: A1(value: "Hello"))
 let encoder = JSONEncoder().addToCodableFactory(factory)
 let data = try encoder.encode(myObject)
